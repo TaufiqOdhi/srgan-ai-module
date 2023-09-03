@@ -1,0 +1,8 @@
+FROM taufiqodhi/srgan-ai-module:req
+ENV PRUNE_AMOUNT=0.5
+
+RUN mkdir app
+WORKDIR /app
+COPY . .
+
+CMD ["python", "main.py"]
