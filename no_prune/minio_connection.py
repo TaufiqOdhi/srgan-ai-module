@@ -1,9 +1,10 @@
 from minio import Minio
+import os
 
 
 #Initialize Minio Client
 minio_client = Minio(
-    endpoint="localhost:9000",
+    endpoint=f"{os.getenv('MINIO_HOST', 'localhost')}:9000",
     access_key="minioadmin",
     secret_key="minioadmin",
     secure=False, # disable SSL
