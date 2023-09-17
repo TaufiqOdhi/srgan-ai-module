@@ -2,10 +2,12 @@ from io import BytesIO
 import torch
 import os
 import numpy as np
-from pathlib import Path
+import requests
+import random
+import string
 from PIL import Image
 from model import Generator
-from compress import recovery_srgan
+from compress import recovery_binary, recovery_srgan, compress_binary
 from config import DEVICE
 from minio_connection import minio_client, bucket_name
 
@@ -35,6 +37,9 @@ if __name__ == "__main__":
         data=BytesIO(output_bytes),
         length=len(output_bytes),
     )
+
+    vram_log_path = os.path.splitext(os.getenv('FILENAME'))[0] + "".join(random.sample(string.ascii_letters, 3)) + '.txt'
+    requests.post(url=f'http://{os.getenv("IP_HOST", "localhost")}:8000/vram_logs', data=dict(filename=vram_log_path))
 
     print(output_filepath)    
     # print(image)
