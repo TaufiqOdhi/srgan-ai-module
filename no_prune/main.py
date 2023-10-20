@@ -39,7 +39,15 @@ if __name__ == "__main__":
     )
 
     vram_log_path = os.path.splitext(os.getenv('FILENAME'))[0] + "".join(random.sample(string.ascii_letters, 3)) + '.txt'
-    requests.post(url=f'http://{os.getenv("IP_HOST", "localhost")}:8000/vram_logs', data=dict(filename=vram_log_path))
+    requests.post(url=f'http://{os.getenv("IP_HOST", "localhost")}:8000/vram_logs',
+                  data=dict(filename=vram_log_path,
+                            image_filename=os.getenv("FILENAME"),
+                            start_timestamp=os.getenv('START_TIMESTAMP', '')
+                        )
+                )
+    print(f"Allocated memory: {torch.cuda.memory_allocated() / (1024 ** 2):.2f} MB")
+    print(f"Reserved memory: {torch.cuda.memory_reserved() / (1024 ** 2):.2f} MB")
+
 
     print(output_filepath)    
     # print(image)
