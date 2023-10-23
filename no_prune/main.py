@@ -45,8 +45,8 @@ if __name__ == "__main__":
                             start_timestamp=os.getenv('START_TIMESTAMP', '')
                         )
                 )
-    print(f"Allocated memory: {torch.cuda.memory_allocated() / (1024 ** 2):.2f} MB")
-    print(f"Reserved memory: {torch.cuda.memory_reserved() / (1024 ** 2):.2f} MB")
+    # print(f"Allocated memory: {torch.cuda.memory_allocated() / (1024 ** 2):.2f} MB")
+    # print(f"Reserved memory: {torch.cuda.memory_reserved() / (1024 ** 2):.2f} MB")
 
 
     print(output_filepath)    
