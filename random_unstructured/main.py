@@ -44,7 +44,7 @@ if __name__ == "__main__":
                   data=dict(filename=vram_log_path,
                             image_filename=os.getenv("FILENAME"),
                             start_timestamp=os.getenv('START_TIMESTAMP', ''),
-                            tipe_model=f"random_unstructured_{os.getenv('PRUNE_AMOUNT', '')}"
+                            tipe_model=f"random_unstructured_{int(float(os.getenv('PRUNE_AMOUNT', '0'))*100)}"
                         )
                 )
     Image.fromarray(input_image).save(output_filepath)
