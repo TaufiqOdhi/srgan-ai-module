@@ -42,7 +42,8 @@ if __name__ == "__main__":
     requests.post(url=f'http://{os.getenv("IP_HOST", "localhost")}:8000/vram_logs',
                   data=dict(filename=vram_log_path,
                             image_filename=os.getenv("FILENAME"),
-                            start_timestamp=os.getenv('START_TIMESTAMP', '')
+                            start_timestamp=os.getenv('START_TIMESTAMP', ''),
+                            tipe_model='no_prune'
                         )
                 )
     # print(f"Allocated memory: {torch.cuda.memory_allocated() / (1024 ** 2):.2f} MB")
