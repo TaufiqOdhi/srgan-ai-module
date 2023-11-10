@@ -6,14 +6,15 @@ import requests
 import random
 import string
 from PIL import Image
-from model import Generator
+from no_prune.model import Generator
 from compress import recovery_binary, recovery_srgan, compress_binary
 from config import DEVICE
 from minio_connection import minio_client, bucket_name
 
-if __name__ == "__main__":
-    input_filepath = f'input_files/{os.getenv("FILENAME")}'
-    output_filepath = f"output_files/{os.getenv('FILENAME')}"
+
+def srgan(filename: str, ip_host: str, start_timestamp: str):
+    input_filepath = f'input_files/{filename}'
+    output_filepath = f"output_files/{filename}"
     
     input_filepath = minio_client.get_object(
         bucket_name=bucket_name,
@@ -21,7 +22,7 @@ if __name__ == "__main__":
     )
     
     gen = Generator()
-    gen.load_state_dict(torch.load('gen.pth.tar')["state_dict"])
+    gen.load_state_dict(torch.load('no_prune/gen.pth.tar')["state_dict"])
     gen.eval().to(DEVICE)
 
     input_image = np.asarray(Image.open(input_filepath))
@@ -38,13 +39,13 @@ if __name__ == "__main__":
         length=len(output_bytes),
     )
 
-    vram_log_path = os.path.splitext(os.getenv('FILENAME'))[0] + "".join(random.sample(string.ascii_letters, 3)) + '.txt'
-    requests.post(url=f'http://{os.getenv("IP_HOST", "localhost")}:8000/vram_logs',
+    vram_log_path = os.path.splitext(filename)[0] + "".join(random.sample(string.ascii_letters, 3)) + '.txt'
+    requests.post(url=f'http://{ip_host}:8000/vram_logs',
                   data=dict(filename=vram_log_path,
-                            image_filename=os.getenv("FILENAME", ''),
-                            start_timestamp=os.getenv('START_TIMESTAMP', ''),
+                            image_filename=filename,
+                            start_timestamp=start_timestamp,
                             tipe_model='no_prune',
-                            ip_host='os.getenv("IP_HOST", "localhost")',
+                            ip_host=ip_host,
                         )
                 )
     # print(f"Allocated memory: {torch.cuda.memory_allocated() / (1024 ** 2):.2f} MB")
@@ -53,3 +54,11 @@ if __name__ == "__main__":
 
     print(output_filepath)    
     # print(image)
+
+
+if __name__ == "__main__":
+    srgan(
+        filename=os.getenv("FILENAME", ''),
+        ip_host=os.getenv("IP_HOST", "localhost"),
+        start_timestamp=os.getenv('START_TIMESTAMP', ''),
+    )
