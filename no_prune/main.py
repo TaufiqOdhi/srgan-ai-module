@@ -45,7 +45,7 @@ def srgan(filename: str, ip_host: str, start_timestamp: str):
                             image_filename=filename,
                             start_timestamp=start_timestamp,
                             tipe_model='no_prune',
-                            ip_host=ip_host,
+                            ip_host_manager=os.getenv('MANAGER_HOST', 'localhost'),
                         )
                 )
     # print(f"Allocated memory: {torch.cuda.memory_allocated() / (1024 ** 2):.2f} MB")
