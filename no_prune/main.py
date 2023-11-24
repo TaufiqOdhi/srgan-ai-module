@@ -48,6 +48,7 @@ def srgan(filename: str, ip_host: str, start_timestamp: str):
                         tipe_model='no_prune',
                         ip_host_manager=os.getenv('MANAGER_HOST', 'localhost'),
                         status_process='Success', message_process='Berhasil diproses',
+                        node_worker=os.getenv('NODE_WORKER', '')
                     )
             )
         # print(f"Allocated memory: {torch.cuda.memory_allocated() / (1024 ** 2):.2f} MB")
@@ -64,6 +65,7 @@ def srgan(filename: str, ip_host: str, start_timestamp: str):
                     tipe_model='no_prune',
                     ip_host_manager=os.getenv('MANAGER_HOST', 'localhost'),
                     status_process='Fail', message_process=e.__str__(),
+                    node_worker=os.getenv('NODE_WORKER', '')
                 )
         )    
 

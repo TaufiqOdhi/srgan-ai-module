@@ -13,6 +13,7 @@ services:
       - MINIO_HOST=minio-server
       - REDIS_HOST=redis
       - MANAGER_HOST=10.21.74.215
+      - NODE_WORKER=Odhi-Laptop
     networks:
       - srgan-api
   lab-pasca-pc-1:
@@ -27,6 +28,7 @@ services:
       - MINIO_HOST=minio-server
       - REDIS_HOST=redis
       - MANAGER_HOST=10.21.74.215
+      - NODE_WORKER=LAB-PASCA-PC-1
     networks:
       - srgan-api
   ncc-lab-pc-8:
@@ -41,6 +43,7 @@ services:
       - MINIO_HOST=minio-server
       - REDIS_HOST=redis
       - MANAGER_HOST=10.21.74.215
+      - NODE_WORKER=NCC-LAB-PC-8
     networks:
       - srgan-api
   ncc-pc-3:
@@ -55,6 +58,7 @@ services:
       - MINIO_HOST=minio-server
       - REDIS_HOST=redis
       - MANAGER_HOST=10.21.74.215
+      - NODE_WORKER=NCC-PC-3
     networks:
       - srgan-api
   ncc-pc-4:
@@ -69,6 +73,7 @@ services:
       - MINIO_HOST=minio-server
       - REDIS_HOST=redis
       - MANAGER_HOST=10.21.74.215
+      - NODE_WORKER=NCC-PC-4
     networks:
       - srgan-api
 

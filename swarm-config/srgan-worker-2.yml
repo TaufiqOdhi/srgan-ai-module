@@ -7,8 +7,8 @@ services:
       replicas: 1
     environment:
       - QUEUE_NAME=all
-      - MINIO_HOST=10.21.74.215
-      - REDIS_HOST=10.21.74.215
+      - MINIO_HOST=minio-server
+      - REDIS_HOST=redis
       - MANAGER_HOST=10.21.74.215
     networks:
       - srgan-api

@@ -48,6 +48,7 @@ def srgan(filename: str, ip_host: str, start_timestamp: str, prune_amount: str):
                         tipe_model=f"l2_norm_{prune_amount}",
                         ip_host_manager=os.getenv("MANAGER_HOST", "localhost"),
                         status_process='Success', message_process='Berhasil diproses',
+                        node_worker=os.getenv('NODE_WORKER', '')
                     )
             )
 
@@ -61,6 +62,7 @@ def srgan(filename: str, ip_host: str, start_timestamp: str, prune_amount: str):
                     tipe_model=f"l2_norm_{prune_amount}",
                     ip_host_manager=os.getenv('MANAGER_HOST', 'localhost'),
                     status_process='Fail', message_process=e.__str__(),
+                    node_worker=os.getenv('NODE_WORKER', '')
                 )
         )
 
