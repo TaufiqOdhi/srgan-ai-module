@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  all:
+    image: taufiqodhi/srgan-ai-module:worker
+    deploy:
+      replicas: 1
+    environment:
+      - QUEUE_NAME=all
+      - MINIO_HOST=10.21.74.215
+      - REDIS_HOST=10.21.74.215
+      - MANAGER_HOST=10.21.74.215
+    networks:
+      - srgan-api
+
+networks:
+  srgan-api:
+    external: true

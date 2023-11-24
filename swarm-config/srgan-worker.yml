@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  default:
+    image: taufiqodhi/srgan-ai-module:worker
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == odhiRtxLaptop
+    environment:
+      - QUEUE_NAME=default
+      - MINIO_HOST=minio-server
+      - REDIS_HOST=redis
+      - MANAGER_HOST=10.21.74.215
+    networks:
+      - srgan-api
+  lab-pasca-pc-1:
+    image: taufiqodhi/srgan-ai-module:worker
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == adminuser-HURACAN-G21CN-G21CN
+    environment:
+      - QUEUE_NAME=lab-pasca-pc-1
+      - MINIO_HOST=minio-server
+      - REDIS_HOST=redis
+      - MANAGER_HOST=10.21.74.215
+    networks:
+      - srgan-api
+  ncc-lab-pc-8:
+    image: taufiqodhi/srgan-ai-module:worker
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == ncclabpc8-if-its
+    environment:
+      - QUEUE_NAME=ncc-lab-pc-8
+      - MINIO_HOST=minio-server
+      - REDIS_HOST=redis
+      - MANAGER_HOST=10.21.74.215
+    networks:
+      - srgan-api
+  ncc-pc-3:
+    image: taufiqodhi/srgan-ai-module:worker
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == wwpc-nccPC3
+    environment:
+      - QUEUE_NAME=ncc-pc-3
+      - MINIO_HOST=minio-server
+      - REDIS_HOST=redis
+      - MANAGER_HOST=10.21.74.215
+    networks:
+      - srgan-api
+  ncc-pc-4:
+    image: taufiqodhi/srgan-ai-module:worker
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == nccpc-Legion-T7-34IAZ7
+    environment:
+      - QUEUE_NAME=ncc-pc-4
+      - MINIO_HOST=minio-server
+      - REDIS_HOST=redis
+      - MANAGER_HOST=10.21.74.215
+    networks:
+      - srgan-api
+
+networks:
+  srgan-api:
+    external: true
