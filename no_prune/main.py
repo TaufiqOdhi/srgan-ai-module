@@ -5,6 +5,7 @@ import numpy as np
 import requests
 import random
 import string
+import subprocess
 from PIL import Image
 from no_prune.model import Generator
 from compress import recovery_binary, recovery_srgan, compress_binary
@@ -13,6 +14,10 @@ from minio_connection import minio_client, bucket_name
 
 
 def srgan(filename: str, ip_host: str, start_timestamp: str):
+    command = "ip route | awk '/default/ { print $3 }'"
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, text=True)
+    ip_host_in = process.stdout.read()[:-1]
+
     input_filepath = f'input_files/{filename}'
     output_filepath = f"output_files/{filename}"
     
@@ -41,7 +46,7 @@ def srgan(filename: str, ip_host: str, start_timestamp: str):
         )
 
         vram_log_path = os.path.splitext(filename)[0] + "".join(random.sample(string.ascii_letters, 3)) + '.txt'
-        requests.post(url=f'http://{ip_host}:8000/vram_logs',
+        requests.post(url=f'http://{ip_host_in}:8000/vram_logs',
             data=dict(filename=vram_log_path,
                         image_filename=filename,
                         start_timestamp=start_timestamp,
@@ -59,7 +64,7 @@ def srgan(filename: str, ip_host: str, start_timestamp: str):
         print(output_filepath)    
         # print(image)
     except RuntimeError as e:
-        requests.post(url=f'http://{ip_host}:8000/vram_logs',
+        requests.post(url=f'http://{ip_host_in}:8000/vram_logs',
             data=dict(filename='-',
                     image_filename=filename,
                     start_timestamp=start_timestamp,
