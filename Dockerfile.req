@@ -1,3 +1,5 @@
 FROM pytorch/pytorch:2.1.1-cuda12.1-cudnn8-runtime
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+RUN apt-get update
+RUN apt-get install -y iproute2
